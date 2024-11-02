@@ -130,25 +130,26 @@ def filter_by_type(json_response, p2p: bool, dedicated: bool, double_vpn: bool, 
 
     for eachServer in json_response:
         server_count += 1
-        for ServerType in eachServer["categories"]:
-            if p2p and ServerType["name"] == "P2P":
-                remaining_servers.append(eachServer)
-                break
-            if dedicated and ServerType["name"] == "Dedicated IP":
-                remaining_servers.append(eachServer)
-                break
-            if double_vpn and ServerType["name"] == "Double VPN":
-                remaining_servers.append(eachServer)
-                break
-            if tor_over_vpn and ServerType["name"] == "Onion Over VPN":
-                remaining_servers.append(eachServer)
-                break
-            if anti_ddos and ServerType["name"] == "Obfuscated Servers":
-                remaining_servers.append(eachServer)
-                break
-            if standard_vpn and ServerType["name"] == "Standard VPN servers":
-                remaining_servers.append(eachServer)
-                break
+        if "groups" in eachServer:
+            for ServerType in eachServer["groups"]:
+                if p2p and ServerType["title"] == "P2P":
+                    remaining_servers.append(eachServer)
+                    break
+                if dedicated and ServerType["title"] == "Dedicated IP":
+                    remaining_servers.append(eachServer)
+                    break
+                if double_vpn and ServerType["title"] == "Double VPN":
+                    remaining_servers.append(eachServer)
+                    break
+                if tor_over_vpn and ServerType["title"] == "Onion Over VPN":
+                    remaining_servers.append(eachServer)
+                    break
+                if anti_ddos and ServerType["title"] == "Obfuscated Servers":
+                    remaining_servers.append(eachServer)
+                    break
+                if standard_vpn and ServerType["title"] == "Standard VPN servers":
+                    remaining_servers.append(eachServer)
+                    break
     # logger.debug("Total available servers = ", serverCount)
     return remaining_servers
 
