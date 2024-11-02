@@ -113,9 +113,9 @@ def filter_by_netflix(json_response, country_code: str) -> List:
         server_count += 1
         for server in netflix_srv:
             for number in range(server[0], server[1] + 1):
-                if server[2] + str(number) + "." in eachServer["domain"]:
+                if server[2] + str(number) + "." in eachServer["hostname"]:
                     remaining_servers.append(eachServer)
-                    # logger.debug(eachServer["domain"])
+                    # logger.debug(eachServer["hostname"])
     # logger.debug("Total available servers = ", serverCount)
     return remaining_servers
 
@@ -160,10 +160,10 @@ def filter_by_protocol(json_res_list: List, tcp: bool) -> List:
     for res in json_res_list:
         # when connecting using TCP only append if it supports OpenVPN-TCP
         if tcp is True and res["features"]["openvpn_tcp"] is True:
-            remaining_servers.append([res["domain"][:res["domain"].find(".")], res["load"]])
+            remaining_servers.append([res["hostname"][:res["hostname"].find(".")], res["load"]])
         # when connecting using UDP only append if it supports OpenVPN-UDP
         elif tcp is False and res["features"]["openvpn_udp"] is True:
-            remaining_servers.append([res["domain"][:res["domain"].find(".")], res["load"]])
+            remaining_servers.append([res["hostname"][:res["hostname"].find(".")], res["load"]])
     return remaining_servers
 
 

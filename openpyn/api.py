@@ -95,8 +95,8 @@ def list_all_countries() -> None:
     url = "https://api.nordvpn.com/v1/servers?limit=0"
     json_response = get_json_cached(url)
     for res in json_response:
-        if res["domain"][:2] not in countries_mapping:
-            countries_mapping.update({res["domain"][:2]: res["country"]})
+        if res["hostname"][:2] not in countries_mapping:
+            countries_mapping.update({res["hostname"][:2]: res["country"]})
     for key, val in countries_mapping.items():
         print("Full Name : " + val + "\t\tCountry Code : " + key)
 
@@ -107,7 +107,7 @@ def get_country_code(full_name: str) -> str:
     json_response = get_json_cached(url)
     for res in json_response:
         if res["country"].lower() == full_name:
-            code = res["domain"][:2]
+            code = res["hostname"][:2]
             return code
     raise RuntimeError("Country Name Not Correct")
 
@@ -117,7 +117,7 @@ def get_country_name(iso_code: str) -> str:
     url = "https://api.nordvpn.com/v1/servers?limit=0"
     json_response = get_json_cached(url)
     for res in json_response:
-        if res["domain"][:2] == iso_code:
+        if res["hostname"][:2] == iso_code:
             name = res["country"]
             return name
     raise RuntimeError("Country Code Not Correct")
